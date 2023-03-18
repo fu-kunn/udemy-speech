@@ -13,16 +13,24 @@ gender_type = {
     'female': texttospeech.SsmlVoiceGender.FEMALE,
     'neutral': texttospeech.SsmlVoiceGender.NEUTRAL
 }
+lang_code = {
+    '英語': 'en-US',
+    '日本語': 'ja-JP'
+}
 
+lang = '日本語'
 gender = 'defalut'
+text = "こんにちは、私はプログラミング講師のふーくんです"
+
+
 
 
 client = texttospeech.TextToSpeechClient()
 
-synthesis_input = texttospeech.SynthesisInput(text="こんにちは、私はプログラミング講師のふーくんです")
+synthesis_input = texttospeech.SynthesisInput(text=text)
 
 voice = texttospeech.VoiceSelectionParams(
-    language_code="ja-JP", ssml_gender=gender_type[gender]
+    language_code=lang_code[lang], ssml_gender=gender_type[gender]
 )
 
 audio_config = texttospeech.AudioConfig(
