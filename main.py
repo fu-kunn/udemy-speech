@@ -2,16 +2,27 @@ import os
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'secret.json'
 
-
 from google.cloud import texttospeech
 from IPython.display import Audio
+
+
+# 関数の作成
+gender_type = {
+    'defalut': texttospeech.SsmlVoiceGender.SSML_VOICE_GENDER_UNSPECIFIED,
+    'male': texttospeech.SsmlVoiceGender.MALE,
+    'female': texttospeech.SsmlVoiceGender.FEMALE,
+    'neutral': texttospeech.SsmlVoiceGender.NEUTRAL
+}
+
+gender = 'defalut'
+
 
 client = texttospeech.TextToSpeechClient()
 
 synthesis_input = texttospeech.SynthesisInput(text="こんにちは、私はプログラミング講師のふーくんです")
 
 voice = texttospeech.VoiceSelectionParams(
-    language_code="ja-JP", ssml_gender=texttospeech.SsmlVoiceGender.FEMALE
+    language_code="ja-JP", ssml_gender=gender_type[gender]
 )
 
 audio_config = texttospeech.AudioConfig(
