@@ -43,10 +43,21 @@ def synthesize_speech(text, lang='日本語', gender='defalut'):
 
 st.title('音声出力アプリ')
 
+st.markdown('### データ準備')
 
+input_option = st.selectbox(
+    '入力データの選択',
+    ('直接入力', 'テキストファイル')
+)
+input_data = None
 
-
-
+if input_option == '直接入力':
+    input_data = st.text_area('こちらにテキストを入力してください。', 'Cloud Speech-to-Text用のサンプル文になります。')
+else:
+    uploaded_file = st.file_uploader('テキストファイルをアップロードして下さい。', ['txt'])
+    if uploaded_file is not None:
+        content = uploaded_file.read()
+        input_data = content.decode()
 
 
 # lang = '日本語'
