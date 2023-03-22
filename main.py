@@ -8,9 +8,9 @@ from google.cloud import texttospeech
 
 
 # 関数の作成
-def synthesize_speech(text, lang='日本語', gender='defalut'):
+def synthesize_speech(text, lang='日本語', gender='default'):
     gender_type = {
-        'defalut': texttospeech.SsmlVoiceGender.SSML_VOICE_GENDER_UNSPECIFIED,
+        'default': texttospeech.SsmlVoiceGender.SSML_VOICE_GENDER_UNSPECIFIED,
         'male': texttospeech.SsmlVoiceGender.MALE,
         'female': texttospeech.SsmlVoiceGender.FEMALE,
         'neutral': texttospeech.SsmlVoiceGender.NEUTRAL
@@ -59,9 +59,32 @@ else:
         content = uploaded_file.read()
         input_data = content.decode()
 
+if input_data is not None:
+    st.write('入力データ')
+    st.write(input_data)
+    st.markdown('### パラメータ設定')
+    st.subheader('言語と話者の性別選択')
+
+    lang = st.selectbox(
+        '言語を選択してください',
+        ('日本語', '英語')
+    )
+    gender = st.selectbox(
+        '話者の性別を選択してください',
+        ('default', 'male', 'female', 'neutral')
+    )
+    st.markdown('### 音声合成')
+    st.write('こちらの文章で音声ファイルの生成を行いますか？')
+    if st.button('開始'):
+        comment = st.empty()
+        comment.write('音声出力を開始します')
+        response = synthesize_speech(input_data, lang=lang, gender=gender)
+        st.audio(response.audio_content)
+        comment.write('完了しました')
+
 
 # lang = '日本語'
-# gender = 'defalut'
+# gender = 'default'
 # text = "こんにちは、私はプロ野球選手のふーくんです"
 
 # """
